@@ -143,7 +143,7 @@ Time : $(date '+%F %T')
 
 COUNT=0
 
-echo "$SORTED" | while IFS='|' read DOMAIN PING TCP TLS HTTP SCORE
+while IFS='|' read DOMAIN PING TCP TLS HTTP SCORE
 do
 
 COUNT=$((COUNT+1))
@@ -164,7 +164,9 @@ ${COUNT}. ${DOMAIN}
 
 "
 
-done
+done <<EOF
+$SORTED
+EOF
 
 send_tg "$MSG"
 
