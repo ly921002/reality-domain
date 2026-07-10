@@ -1,0 +1,8 @@
+mirrors.ocf.berkeley.edu
+mirrors.us.kernel.org
+mirrors.mit.edu
+archive.linux.duke.edu
+ftp.tsukuba.wide.ad.jp
+linux.yz.yamagata-u.ac.jp
+ftp.rz.tu-bs.de
+drmirror.physi.uni-heidelberg.de
