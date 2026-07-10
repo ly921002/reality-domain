@@ -1,0 +1,14 @@
+services:
+  reality-monitor:
+    image: ghcr.io/ly921002/reality-domain:latest
+    container_name: reality-monitor
+    restart: unless-stopped
+
+    environment:
+      BOT_TOKEN: xxxxxxxxxxxxxxxxx
+      CHAT_ID: "-100123456"
+
+      INTERVAL: "3600"
+
+    volumes:
+      - ./domains.txt:/app/domains.txt:ro
