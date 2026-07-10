@@ -74,9 +74,9 @@ score_domain() {
     # 转换为 ms
     ################################
 
-    TCP_MS=$(awk "BEGIN{printf \"%.0f\",$TCP*1000}")
-    TLS_MS=$(awk "BEGIN{printf \"%.0f\",$TLS*1000}")
-    HTTP_MS=$(awk "BEGIN{printf \"%.0f\",$HTTP*1000}")
+    TCP_MS=$(awk "BEGIN{printf \"%.1f\",$TCP*1000}")
+    TLS_MS=$(awk "BEGIN{printf \"%.1f\",$TLS*1000}")
+    HTTP_MS=$(awk "BEGIN{printf \"%.1f\",$HTTP*1000}")
 
     ################################
     # 综合评分
