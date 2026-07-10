@@ -4,10 +4,16 @@ set -eu
 BOT_TOKEN="${BOT_TOKEN}"
 CHAT_ID="${CHAT_ID}"
 INTERVAL="${INTERVAL:-3600}"
-DOMAINS_FILE="${DOMAINS_FILE:-/app/domains.txt}"
+DOMAINS="${DOMAINS:-}"
 PING_COUNT="${PING_COUNT:-5}"
 CONNECT_TIMEOUT="${CONNECT_TIMEOUT:-5}"
 TOP="${TOP:-0}"   # 0=全部，5=前5名
+
+
+[ -n "$DOMAINS" ] || {
+    echo "ERROR: DOMAINS is empty."
+    exit 1
+}
 
 send_tg() {
     curl -s \
@@ -114,16 +120,15 @@ do
 
 TMP=$(mktemp)
 
-while read DOMAIN
+echo "$DOMAINS" | tr ',' '\n' | while IFS= read -r DOMAIN
 do
-
     [ -z "$DOMAIN" ] && continue
 
     echo "Testing $DOMAIN..."
 
     score_domain "$DOMAIN" >> "$TMP"
 
-done < "$DOMAINS_FILE"
+done
 
 SORTED=$(sort -t'|' -k6 -nr "$TMP")
 
