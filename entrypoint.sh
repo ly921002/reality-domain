@@ -50,33 +50,23 @@ score_domain() {
     fi
 
     ################################
-    # HTTPS
+    # TCP
     ################################
 
-    CURL="$(curl \
+    TCP="$(curl \
         -o /dev/null \
         -s \
         --connect-timeout "$CONNECT_TIMEOUT" \
-        -w "%{time_connect}|%{time_appconnect}|%{time_starttransfer}|%{time_total}" \
+        -w "%{time_connect}" \
         "https://${DOMAIN}" || true)"
 
-    TCP="$(echo "$CURL" | cut -d'|' -f1)"
-    TLS="$(echo "$CURL" | cut -d'|' -f2)"
-    HTTP="$(echo "$CURL" | cut -d'|' -f3)"
-    TOTAL="$(echo "$CURL" | cut -d'|' -f4)"
-
     [ -z "$TCP" ] && TCP=9
-    [ -z "$TLS" ] && TLS=9
-    [ -z "$HTTP" ] && HTTP=9
-    [ -z "$TOTAL" ] && TOTAL=9
 
     ################################
     # 转换为 ms
     ################################
 
     TCP_MS=$(awk "BEGIN{printf \"%.0f\",$TCP*1000}")
-    TLS_MS=$(awk "BEGIN{printf \"%.0f\",$TLS*1000}")
-    HTTP_MS=$(awk "BEGIN{printf \"%.0f\",$HTTP*1000}")
 
     ################################
     # 综合评分
@@ -85,8 +75,6 @@ score_domain() {
     SCORE=$(awk \
         -v ping="$AVG" \
         -v tcp="$TCP_MS" \
-        -v tls="$TLS_MS" \
-        -v http="$HTTP_MS" \
         -v loss="$LOSS" '
 
 BEGIN{
@@ -95,8 +83,6 @@ score=100
 
 score-=ping*0.15
 score-=tcp*0.25
-score-=tls*0.45
-score-=http*0.10
 score-=loss*2
 
 if(score<0)
@@ -106,12 +92,10 @@ printf "%.1f",score
 
 }')
 
-    printf "%s|%.1f|%d|%d|%d|%.1f\n" \
+    printf "%s|%.1f|%d|%.1f\n" \
         "$DOMAIN" \
         "$AVG" \
         "$TCP_MS" \
-        "$TLS_MS" \
-        "$HTTP_MS" \
         "$SCORE"
 }
 
@@ -143,24 +127,22 @@ Time : $(date '+%F %T')
 
 COUNT=0
 
-while IFS='|' read DOMAIN PING TCP TLS HTTP SCORE
-do
+while IFS='|' read DOMAIN PING TCP SCORE
+ do
 
-COUNT=$((COUNT+1))
+ COUNT=$((COUNT+1))
 
-if [ "$TOP" -gt 0 ] && [ "$COUNT" -gt "$TOP" ]
-then
-    break
-fi
+ if [ "$TOP" -gt 0 ] && [ "$COUNT" -gt "$TOP" ]
+ then
+     break
+ fi
 
-MSG="${MSG}
-${COUNT}. ${DOMAIN}
+ MSG="${MSG}
+ ${COUNT}. ${DOMAIN}
 
-⭐ Score : ${SCORE}
-📶 Ping : ${PING} ms
-🔌 TCP  : ${TCP} ms
-🔒 TLS  : ${TLS} ms
-⚡ HTTP : ${HTTP} ms
+ ⭐ Score : ${SCORE}
+ 📶 Ping : ${PING} ms
+ 🔌 TCP  : ${TCP} ms
 
 "
 
