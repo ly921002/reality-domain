@@ -12,7 +12,6 @@ RUN apk add --no-cache \
 WORKDIR /app
 
 COPY entrypoint.sh .
-COPY domains.txt .
 
 RUN chmod +x /app/entrypoint.sh
 
