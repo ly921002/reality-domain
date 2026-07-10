@@ -9,6 +9,3 @@ services:
       CHAT_ID: "-100123456"
 
       INTERVAL: "3600"
-
-    volumes:
-      - ./domains.txt:/app/domains.txt:ro
