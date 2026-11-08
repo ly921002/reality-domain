@@ -4,7 +4,7 @@ set -eu
 BOT_TOKEN="${BOT_TOKEN}"
 CHAT_ID="${CHAT_ID}"
 INTERVAL="${INTERVAL:-3600}"
-DOMAINS="${DOMAINS:-}"
+DOMAINS="${DOMAINS:-"https://github.com/ly921002/reality-domain/blob/main/domains.txt"}"
 PING_COUNT="${PING_COUNT:-5}"
 CONNECT_TIMEOUT="${CONNECT_TIMEOUT:-5}"
 TOP="${TOP:-0}"   # 0=全部，5=前5名
