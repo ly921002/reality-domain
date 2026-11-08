@@ -2,7 +2,18 @@ mirrors.ocf.berkeley.edu
 mirrors.us.kernel.org
 mirrors.mit.edu
 archive.linux.duke.edu
-ftp.tsukuba.wide.ad.jp
+debian.mirror.constant.com
+mirror.141networks.com
+mirror.tzulo.com
 
 ftp.rz.tu-bs.de
 drmirror.physi.uni-heidelberg.de
+mirror.creoline.net
+mirror.dogado.de
+mirror.eu.oneandone.net
+
+ftp.lanet.kr
+mirror.pangkin.com
+
+ftp.tsukuba.wide.ad.jp
+www.iij.ad.jp
